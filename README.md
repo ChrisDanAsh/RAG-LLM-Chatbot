@@ -72,7 +72,7 @@ llm-chatbot/
 
 ```bash
 git clone https://github.com/ChrisDanAsh/RAG-LLM-Chatbot.git
-cd LLM-Chatbot/llm-chatbot
+cd RAG-LLM-Chatbot/llm-chatbot
 ```
 
 ### 2. Create Virtual Environment
@@ -128,8 +128,8 @@ The CLI will start and prompt you for input. Type your questions and press Enter
 
 **Example interaction:**
 ```
-You: What is retrieval-augmented generation?
-Assistant: [streaming response with context from vector store]
+You: Who can apply a Visa online?
+Assistant: [streaming response with context from vector store] To determine eligibility for an online visa application,you be asked a series of questions durirng the application process.  If you meet the criteria, you can proceed to complete the online form 
 
 You: exit
 ```
@@ -199,15 +199,6 @@ Edit `src/agent/config.py` to customize:
   - **Subsequent runs**: Loads and processes the PDF at startup (~3-5 seconds)
   - The vectorstore is built in-memory at each startup, not persisted between sessions
 
-
-## Troubleshooting
-
-### Rate Limit Errors
-
-If you see `429 ResourceExhausted` errors:
-- Create a new Project on you Google API and create a new key for 20 more requests
-- Monitor usage at: https://ai.dev/usage
-- Upgrade your Google API tier
 
 ## Next Steps
 - Implement web application with user friendly UI
