@@ -71,7 +71,7 @@ llm-chatbot/
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/ChrisDanAsh/LLM-Chatbot.git
+git clone https://github.com/ChrisDanAsh/RAG-LLM-Chatbot.git
 cd LLM-Chatbot/llm-chatbot
 ```
 
@@ -147,11 +147,7 @@ Note: Ensure that you are in the llm-chatbot directory to run the tests
 ```bash
 pytest tests/ -v
 ```
-#### Run Fast Tests Only (Skip Model Loading)
-Some tests require loading the embedding model and PDF, which can be slow. To run only fast unit tests:
-```bash
-pytest tests/ -v -m "slow"
-```
+
 #### Run Specific Test Types
 ```bash
 # Run only integration tests
@@ -225,4 +221,3 @@ If you see `429 ResourceExhausted` errors:
 ## Contact
 
 - **GitHub**: [@ChrisDanAsh](https://github.com/ChrisDanAsh)
-- **Repository**: https://github.com/ChrisDanAsh/LLM-Chatbot
