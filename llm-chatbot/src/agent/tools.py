@@ -1,6 +1,7 @@
 """Tools for the agent to use."""
 
 from langchain.tools import tool
+from .config import settings
 from .vectorstore import get_vectorstore
 
 
@@ -10,7 +11,7 @@ def retrieve_context(query: str):
 
     vectorstore = get_vectorstore()  # Load or create the vectorstore
 
-    retrieved_docs = vectorstore.similarity_search(query, k=6)
+    retrieved_docs = vectorstore.similarity_search(query, k=settings.RETRIEVAL_K)
 
     serialized = "\n\n".join(doc.page_content for doc in retrieved_docs)
     return serialized, retrieved_docs

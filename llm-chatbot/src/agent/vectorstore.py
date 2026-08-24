@@ -31,8 +31,8 @@ def build_vectorstore(file_path: str, persist_dir: str = "data/embeddings"):
 
     # 2. Split into chunks
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=500,  # chunk size (characters)
-        chunk_overlap=50,  # chunk overlap (characters)
+        chunk_size=settings.CHUNK_SIZE,
+        chunk_overlap=settings.CHUNK_OVERLAP,
         add_start_index=True,  # track index in original document
     )
     all_splits = text_splitter.split_documents(docs)

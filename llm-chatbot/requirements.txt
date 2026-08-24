@@ -8,4 +8,5 @@ langchain-huggingface
 langchain-core==1.1.0
 sentence-transformers
 pypdf
+pyyaml  # used by eval/run_eval.py to load eval/questions.yaml
 # add other runtime deps here

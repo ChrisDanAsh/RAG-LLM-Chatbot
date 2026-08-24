@@ -1,0 +1,144 @@
+# Retrieval eval set for data/TT_Visa_FAQ.pdf.
+# Scored by eval/run_eval.py — see the project README's "Retrieval
+# Evaluation" section for the recorded results and interpretation.
+#
+# gold_pages uses PyPDFLoader's 0-indexed page numbers (metadata["page"]),
+# which is stable across chunk_size changes — unlike chunk IDs, a page
+# number doesn't change when the splitter is reconfigured.
+#
+# Buckets:
+#   topic        - one question per real FAQ page (1-14; page 0 is the
+#                   table of contents and isn't targeted directly).
+#                   Reworded from the FAQ heading, not copied verbatim, so
+#                   this tests semantic match rather than exact keyword hit.
+#   long_page    - extra questions targeting the 3 longest FAQ pages
+#                   (4, 5, 6 - all over 850 characters), specifically
+#                   aimed at content in the back half of the page. These
+#                   are the pages most likely to be cut into multiple
+#                   chunks at small chunk sizes, so they're where a
+#                   chunk-size change should show the biggest effect.
+#   out_of_scope - questions the FAQ doesn't answer at all. gold_pages is
+#                   empty; these don't contribute to recall/MRR, but their
+#                   top-1 similarity score is worth comparing against the
+#                   in-scope questions' scores as a rough diagnostic of
+#                   whether a "no relevant answer" threshold is feasible.
+
+- id: t01
+  bucket: topic
+  question: "Am I eligible to apply for an eVisa online?"
+  gold_pages: [1]
+  note: "Page 1 = 'Who can apply for a Visa online?' (foreign national, 6-month passport validity, no application in progress)."
+
+- id: t02
+  bucket: topic
+  question: "What are the steps to submit an online visa application?"
+  gold_pages: [2]
+  note: "Page 2 = 'How do I apply for a Visa Online?'"
+
+- id: t03
+  bucket: topic
+  question: "I keep getting an error while applying online, what should I do?"
+  gold_pages: [3]
+  note: "Page 3 = error-during-application FAQ."
+
+- id: t04
+  bucket: topic
+  question: "What items do I need before starting my online application?"
+  gold_pages: [4]
+  note: "Page 4 = 'What do I need to apply for a Visa?' (photo, documents, credit card). Longest page in the PDF (1013 chars) - also see long_page bucket."
+
+- id: t05
+  bucket: topic
+  question: "I don't have a scanner, how can I create digital copies of my documents?"
+  gold_pages: [5]
+  note: "Page 5 = making images of passport/supporting documents; covers alternatives to a scanner."
+
+- id: t06
+  bucket: topic
+  question: "What size and format should my visa photo be?"
+  gold_pages: [6]
+  note: "Page 6 = photo requirements (format, KB range, pixel dimensions)."
+
+- id: t07
+  bucket: topic
+  question: "Immigration asked me to pay for my application, how do I do that?"
+  gold_pages: [7]
+  note: "Page 7 = 'What should I do if the Immigration Division requests payment for my application?'"
+
+- id: t08
+  bucket: topic
+  question: "What payment methods are accepted for the visa fee?"
+  gold_pages: [8]
+  note: "Page 8 = 'How can I pay for the online Visa application?' (third-party site, credit card)."
+
+- id: t09
+  bucket: topic
+  question: "Can I pause my application and finish it another day?"
+  gold_pages: [9]
+  note: "Page 9 = saving an application to resume later (.ser file, naming convention)."
+
+- id: t10
+  bucket: topic
+  question: "How long until my session times out?"
+  gold_pages: [10]
+  note: "Page 10 = 30-minute inactivity session expiry."
+
+- id: t11
+  bucket: topic
+  question: "Can I edit my application after I've already submitted it?"
+  gold_pages: [11]
+  note: "Page 11 = 'No' - can't resume/change after submission."
+
+- id: t12
+  bucket: topic
+  question: "How do I reopen a saved application file to continue where I left off?"
+  gold_pages: [12]
+  note: "Page 12 = retrieving a saved application (Resume Application, Select Saved File)."
+
+- id: t13
+  bucket: topic
+  question: "How can I find out the current status of my visa application?"
+  gold_pages: [13]
+  note: "Page 13 = checking visa status via Track Application."
+
+- id: t14
+  bucket: topic
+  question: "Will I be notified when a decision has been made on my visa?"
+  gold_pages: [14]
+  note: "Page 14 = 'How do I know if my Visa is ready?' (email notification, approved/denied)."
+
+- id: lp01
+  bucket: long_page
+  question: "How many supporting documents am I allowed to upload?"
+  gold_pages: [4]
+  note: "Targets the 'limited to twenty in total' bullet, which sits in the second half of page 4 (1013 chars) - the part most likely to be severed from the question heading at small chunk sizes."
+
+- id: lp02
+  bucket: long_page
+  question: "Can a photocopy store scan my documents for me?"
+  gold_pages: [5]
+  note: "Targets item 3 of the numbered list on page 5 (856 chars), near the end of the page."
+
+- id: lp03
+  bucket: long_page
+  question: "What should I do if my photo keeps failing the check even though it meets requirements?"
+  gold_pages: [6]
+  note: "Targets the 'false errors' note near the end of page 6 (879 chars), after the requirements bullets."
+
+- id: oos01
+  bucket: out_of_scope
+  question: "Can I apply for a work permit through this website?"
+  gold_pages: []
+  note: "The FAQ covers eVisa applications only; work permits aren't mentioned anywhere in the document."
+
+- id: oos02
+  bucket: out_of_scope
+  question: "What is the weather like in Trinidad and Tobago in December?"
+  gold_pages: []
+  note: "Unrelated to visa process entirely."
+
+- id: oos03
+  bucket: out_of_scope
+  question: "Do I need a visa to transit through Trinidad without leaving the airport?"
+  gold_pages: []
+  note: "Plausible-sounding visa question, but airside transit isn't addressed anywhere in this FAQ - tests whether a near-topic but unanswered question still scores high."

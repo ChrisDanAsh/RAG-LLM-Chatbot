@@ -18,6 +18,14 @@ class Settings:
     # Vectorstore settings
     DOC_PATH: str = "data/TT_Visa_FAQ.pdf"
     VECTORSTORE_DIR: str = "data/embeddings"
+    # 1500 keeps every FAQ page (max 1013 chars) as a single chunk instead
+    # of cutting mid-answer — see eval/compare_chunk_sizes.py for why.
+    CHUNK_SIZE: int = 1500
+    CHUNK_OVERLAP: int = 0
+    # 4 recovers a recall@3 regression measured at CHUNK_SIZE=1500 (see the
+    # README's Retrieval Evaluation section) — recall@4 matches the old
+    # chunk_size=500 config exactly, and k>4 adds no further recovery.
+    RETRIEVAL_K: int = 4
 
     # Model settings
     EMBEDDING_MODEL: str = "sentence-transformers/all-mpnet-base-v2"
